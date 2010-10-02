@@ -38,8 +38,10 @@ module Paperclip
           file.close
           FileUtils.mkdir_p(File.dirname(path(style_name)))
           log("saving #{path(style_name)}")
-          FileUtils.mv(file.path, path(style_name))
-          FileUtils.chmod(0644, path(style_name))
+          if File.exists?(file.path)
+            FileUtils.mv(file.path, path(style_name)) 
+            FileUtils.chmod(0644, path(style_name))
+          end
         end
         @queued_for_write = {}
       end
